@@ -39,15 +39,15 @@ head(MyData)
 
 ### Custom Function
 ```{r}
-fx1 <- function(Data, Action) {
-  if (Action =='Average') {
+fx1 <- function(Data, Action) { #ask for input Data and the calculation
+  if (Action =='Average') { #Average action, takes mean
     result<- mean(Data)
-  } else if (Action =='Sum') {
+  } else if (Action =='Sum') { #Sum action, takes sum
     result<- sum(Data)
-  } else if (Action =='Observations') {
+  } else if (Action =='Observations') { #Observations action, takes number of observations
     result<- NROW(Data)
   } else {
-    result<- c("Error")
+    result<- c("Error") #everything else is error
   }
   return(result)
 }
