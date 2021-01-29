@@ -1,0 +1,66 @@
+---
+title: "Assignment_3_final"
+author: "Janis Cheng" 
+date: "Jan 28th, 2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Project Info
+
+This project is created on Jan 28th, 2021 for an assignment. It is linked to my [GitHub repository](https://github.com/janischeng0616/Assignment_3.git). My name is Janis Cheng.
+
+### Loading the Data
+```{r}
+setwd("/Users/janischeng/Desktop/BIO432/Assignments/Assignment3/InputData/")#set directory
+MyData<-read.csv("FallopiaData.csv") #load data
+head(MyData) 
+library(dplyr) #load the dplyr library
+```
+
+### Remove rows with ‘Total’ biomass < 60
+```{r}
+MyData <- filter (MyData,Total >=60) 
+```
+
+### Reordering the columns
+```{r}
+MyData <- select(MyData, Total, Taxon, Scenario, Nutrients)
+```
+
+### Making a new column "TotalG" that contains the original "Total" column but in grams
+```{r}
+MyData<- transmute(MyData, TotalG = Total/1000, Taxon, Scenario, Nutrients)
+head(MyData)
+```
+
+### Custom Function
+```{r}
+fx1 <- function(Data, Action) {
+  if (Action =='Average') {
+    result<- mean(Data)
+  } else if (Action =='Sum') {
+    result<- sum(Data)
+  } else if (Action =='Observations') {
+    result<- NROW(Data)
+  } else {
+    result<- c("Error")
+  }
+  return(result)
+}
+```
+
+### Using the Function
+```{r}
+fx1 (MyData$Taxon, "Observations") #total number of observations in the 'Taxon' column
+fx1 (MyData$TotalG [which(MyData$Nutrients=='low')], "Average") #totalG average for low nutrients
+fx1 (MyData$TotalG [which(MyData$Nutrients=='high')], "Average") #totalG average for high nutrients
+```
+
+### Saving It Into A New File
+```{r}
+write.csv(MyData,"/Users/janischeng/Desktop/BIO432/Assignments/Assignment3/WrangledData.csv", row.names = FALSE)#Write (i.e. save) the new data to a file called "WrangledData.csv" in the Output folder. 
+```
