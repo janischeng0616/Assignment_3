@@ -433,15 +433,15 @@ head(MyData)</code></pre>
 </div>
 <div id="custom-function" class="section level3">
 <h3>Custom Function</h3>
-<pre class="r"><code>fx1 &lt;- function(Data, Action) {
-  if (Action =='Average') {
+<pre class="r"><code>fx1 &lt;- function(Data, Action) { #ask for input Data and the calculation
+  if (Action =='Average') { #Average action, takes mean
     result&lt;- mean(Data)
-  } else if (Action =='Sum') {
+  } else if (Action =='Sum') { #Sum action, takes sum
     result&lt;- sum(Data)
-  } else if (Action =='Observations') {
+  } else if (Action =='Observations') { #Observations action, takes number of observations
     result&lt;- NROW(Data)
   } else {
-    result&lt;- c(&quot;Error&quot;)
+    result&lt;- c(&quot;Error&quot;) #everything else is error
   }
   return(result)
 }</code></pre>
