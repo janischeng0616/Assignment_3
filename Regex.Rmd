@@ -1,0 +1,45 @@
+---
+title: "Regex"
+author: "Janis Cheng"
+date: "03/02/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Project Info
+
+This project is created on Feb 3rd, 2021. It is linked to my [GitHub repository](https://github.com/janischeng0616/Assignment_3.git). My name is Janis Cheng.
+
+## Part I 
+
+### Import measurements.csv file from Week 1
+```{r}
+setwd("/Users/janischeng/Desktop/BIO432/Assignments/Assignment 1/")#set directory
+MData<-read.csv("Measurements.csv") #load data
+head(MData) #display data
+library(dplyr) #load the dplyr library
+```
+
+### Adding a new column shortens the genus name in the Organism column
+```{r}
+MData<- transmute(MData, Organism,Sp =sub("(\\w)\\w+","\\1.",MData$Organism), Limb.width, Limb.length, Units, Observer) #Making a new column
+# at the same time replacing the genus name (first word in each cell) to the first letter and a period 
+head(MData) #display modified data
+```
+
+### Creating a new dataset
+```{r}
+MeasShort <- select(MData, Sp, Limb.width, Limb.length, Units, Observer) #this dataset will have the Sp column instead of the Organism column at the beginning
+head (MeasShort)
+```
+
+### Saving It Into A New File
+```{r}
+write.csv(MData,"/Users/janischeng/Desktop/BIO432/Assignments/Assignment3/Output/MeasShort.csv", row.names = FALSE) #save it to the Output folder
+```
+
+
+
